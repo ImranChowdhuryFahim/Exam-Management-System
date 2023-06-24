@@ -84,7 +84,7 @@ $course_title = $row['COURSE_TITLE'];
                                             <div class="row">
                                                 <label class="col-sm-3 control-label">Course Code</label>
                                                 <div class="col-sm-9">
-                                                  <input type="text" name="course_code" class="form-control" placeholder="Course Name" id="event" onkeydown="return alphaOnly(event);" value="<?php echo $course_code; ?>" required="">
+                                                  <input type="text" name="course_code" class="form-control" placeholder="Course Name" id="event" onkeydown="return alphaOnly(event);" value="<?php echo $course_code; ?>" readonly>
                                                 </div>
                                             </div>
                                         </div>

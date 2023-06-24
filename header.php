@@ -42,7 +42,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right animated zoomIn">
                                 <ul class="dropdown-user">                                  
-                                    <li><a href="logout.php"><i class="fa fa-power-off"></i>  Admin Logout</a></li>
+                                    <li>Admin</li>
+                                    <li><?php echo $_SESSION['email'] ?>  </li>
                                 </ul>
                             </div>
                         </li>

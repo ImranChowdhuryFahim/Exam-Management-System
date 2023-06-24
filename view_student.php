@@ -13,7 +13,7 @@ if(isset($_GET['id']) && isset($_GET['email']))
     </h1>
     <p>Are You Sure To Delete This Record?</p>
     <p>
-      <a href="del_student.php?id=<?php echo $_GET['id']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
+      <a href="del_student.php?id=<?php echo $_GET['id']; ?>&email=<?php echo $_GET['email']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
       <a href="view_student.php" class="button button--error" data-for="js_success-popup">No</a>
     </p>
   </div>
@@ -53,37 +53,7 @@ if(isset($_GET['id']) && isset($_GET['email']))
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    <?php 
-                                    include 'connect.php';
-                                    $sql = "SELECT * FROM student";
-                                    $parse = oci_parse($conn,$sql);
-                                    oci_execute($parse);
-                                                                       
                                     
-
-                                   while($row=oci_fetch_array($parse,OCI_ASSOC)) { 
-                                      ?>
-                                            <tr>
-                                                <td><?php echo $row['STUDENT_ID']; ?></td>
-                                                <td><?php echo $row['STUDENT_NAME']; ?></td>
-                                                <td><?php echo $row['STUDENT_EMAIL']; ?></td>
-                                               
-                                                <td><?php echo $row['STUDENT_CONTACT_NO']; ?></td>
-                                                
-                                                <td>
-            <?php if(isset($user_type)){  if($user_type=="Admin"){ ?> 
-                                                <a href="edit_student.php?id=<?=$row['STUDENT_ID'];?>"><button type="button" class="btn btn-xs btn-primary" ><i class="fa fa-plus-square"></i></button></a>
-                                              <?php } } ?>
-
-            <?php if(isset($user_type)){  if($user_type=="Admin"){ ?> 
-                                                <a href="view_student.php?id=<?=$row['STUDENT_ID'];?>&email=<?=$row['STUDENT_EMAIL'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a>
-                                              <?php } } ?>
-                                               
-                                                </td>
-                                            </tr>
-                                          <?php  } 
-                                          ?>
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -132,4 +102,31 @@ if(isset($_GET['id']) && isset($_GET['email']))
 
 Array.from(document.querySelectorAll('button[data-for]')).
 forEach(addButtonTrigger);
+    </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#myTable').DataTable({
+        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+          $(nRow).attr('id', aData[0]);
+        },
+        lengthMenu: 
+            [5,10]
+        ,
+        'serverSide': 'true',
+        'processing': 'true',
+        'paging': 'true',
+        'order': [],
+        'ajax': {
+          'url': 'fetch_students_data.php',
+          'type': 'post',
+        },
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [4]
+          },
+
+        ]
+      });
+    });
     </script>

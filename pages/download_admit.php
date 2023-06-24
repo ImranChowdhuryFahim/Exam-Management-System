@@ -55,10 +55,17 @@ function LoadData()
 	return $data;
 }
 
+
 // Simple table
-function BasicTable($header, $data)
+function BasicTable($header, $data,$student_id, $student_name)
 {
 	// Header
+	$this->Cell(10,7,"ID: ");
+	$this->Cell(38,7,$student_id);
+	$this->Ln(5);
+	$this->Cell(15,7,"Name: ");
+	$this->Cell(38,7,$student_name);
+	$this->Ln(10);
 	foreach($header as $col)
 		$this->Cell(38,7,$col,1);
 	$this->Ln();
@@ -78,8 +85,10 @@ $pdf = new PDF('P','mm','A4');
 $header = array('Course Code', 'Start Time', 'End Time', 'Date','Room No');
 // Data loading
 $data = $pdf->LoadData();
+$id = $_SESSION['id'];
+$name = $_SESSION['name'];
 $pdf->SetFont('Times','',14);
 $pdf->AddPage();
-$pdf->BasicTable($header,$data);
+$pdf->BasicTable($header,$data,$id,$name);
 $pdf->Output();
 ?>

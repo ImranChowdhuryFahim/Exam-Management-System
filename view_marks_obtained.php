@@ -12,6 +12,7 @@
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Student ID: <?php echo $_SESSION['id'] ?></li>
                         <li class="breadcrumb-item active">View Marks Obtained</li>
                     </ol>
                 </div>
@@ -31,23 +32,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    <?php 
-                                    include 'connect.php';
-                                  $sql1 = "SELECT STUDENT_ID,COURSE_CODE,CASE when SECTION_A is null then -1 Else SECTION_A END as SECTION_A,
-                                  CASE when SECTION_B is null then -1 Else SECTION_B END as SECTION_B from MARKS_OBTAINED where student_id='" . $_SESSION["id"] . "'";
-                                  $parse = oci_parse($conn,$sql1);
-                                  oci_execute($parse);
-                                   
-                                   while($row=oci_fetch_array($parse,OCI_ASSOC)) { 
-                                      
-                                      ?>
-                                            <tr>
-                                                <td><?php echo $row['COURSE_CODE']; ?></td>
-                                                <td><?php echo $row['SECTION_A']!=-1?$row['SECTION_A']:'Not Assigned'; ?></td>
-                                                <td><?php echo $row['SECTION_B']!=-1?$row['SECTION_B']:'Not Assigned'; ?></td>
-                                               
-                                            </tr>
-                                          <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -57,3 +41,29 @@
                 
 
 <?php include('footer.php');?>
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#myTable').DataTable({
+        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+          $(nRow).attr('id', aData[0]);
+        },
+        lengthMenu: 
+            [5,10]
+        ,
+        'serverSide': 'true',
+        'processing': 'true',
+        'paging': 'true',
+        'order': [],
+        'ajax': {
+          'url': 'fetch_markes_obtained_data.php',
+          'type': 'post',
+        },
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [2]
+          },
+
+        ]
+      });
+    });
+    </script>

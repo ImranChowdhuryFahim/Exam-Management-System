@@ -51,31 +51,7 @@ if(isset($_GET['course_code']) && isset($_GET['student_id']) && isset($_GET['exa
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    <?php 
-                                    include 'connect.php';
-                                    
-                                  $sql1 = "SELECT student_id,course_code,exam_date,room_no,Case when room_no is null then 'Not Assigned' Else room_no End as room_no
-                                  FROM  attendance";
-                                  $parse = oci_parse($conn,$sql1);
-                                  oci_execute($parse);
 
-                                   while($row=oci_fetch_array($parse,OCI_ASSOC)) { 
-                                
-                              
-                                      ?>
-                                            <tr>
-                                                <td><?php echo $row['STUDENT_ID']; ?></td>
-                                                <td><?php echo $row['COURSE_CODE']; ?></td>
-                                                <td><?php echo $row['EXAM_DATE']; ?></td>
-                                                <td><?php echo $row['ROOM_NO']; ?></td>
-
-                                                <td> 
-                                                <a href="view_exam_request.php?student_id=<?=$row['STUDENT_ID'];?>&course_code=<?=$row['COURSE_CODE'];?>&exam_date=<?=$row['EXAM_DATE'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a> 
-                                                
-                                               
-                                                </td>
-                                            </tr>
-                                          <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -125,4 +101,31 @@ if(isset($_GET['course_code']) && isset($_GET['student_id']) && isset($_GET['exa
 
 Array.from(document.querySelectorAll('button[data-for]')).
 forEach(addButtonTrigger);
+    </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#myTable').DataTable({
+        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+          $(nRow).attr('id', aData[0]);
+        },
+        lengthMenu: 
+            [5,10]
+        ,
+        'serverSide': 'true',
+        'processing': 'true',
+        'paging': 'true',
+        'order': [],
+        'ajax': {
+          'url': 'fetch_exam_request_data.php',
+          'type': 'post',
+        },
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [4]
+          },
+
+        ]
+      });
+    });
     </script>

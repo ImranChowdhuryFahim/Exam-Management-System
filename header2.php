@@ -48,8 +48,10 @@
                                 ?>
                                 <img src="Asset/Profile/blank_avatar.png" alt="user" class="profile-pic" /></a>
                             <div class="dropdown-menu dropdown-menu-right animated zoomIn">
-                                <ul class="dropdown-user">                                  
-                                    <li><a href="logout.php"><i class="fa fa-power-off"></i> <?=$name?> Logout</a></li>
+                                <ul class="dropdown-user">  
+                                    <li>TEACHER ID:<?=$_SESSION['id']?> </li>                                
+                                    <li><?=$name?> </li>
+                                    <li><?=$_SESSION['email']?> </li>
                                 </ul>
                             </div>
                         </li>

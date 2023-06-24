@@ -2473,7 +2473,7 @@ background: #ff9800 !important;
 .timeline-badge.info {
   background-color: #62d1f3 !important;
 }
-.dataTables_wrapper {
+/* .dataTables_wrapper {
   padding-top: 10px;
 }
 .dt-buttons {
@@ -2538,7 +2538,7 @@ background: #ff9800 !important;
   box-shadow: none;
   outline: medium none;
   transition-duration: 0.3s;
-}
+} */
 table.dataTable thead .sorting,
 table.dataTable thead .sorting_asc,
 table.dataTable thead .sorting_asc_disabled,
@@ -2565,7 +2565,7 @@ table.dataTable thead .sorting::after {
   font-family: fontawesome !important;
   margin-left: 10px;
 }
-.dataTables_wrapper .dataTables_paginate {
+/* .dataTables_wrapper .dataTables_paginate {
   float: right;
   padding-top: 0.25em;
   text-align: right;
@@ -2607,7 +2607,7 @@ table.dataTable thead .sorting::after {
 }
 .dataTables_wrapper .dataTables_paginate .ellipsis {
   padding: 0 1em;
-}
+} */
 .tablesaw-bar .btn-group label {
   color: #02756a !important;
 }

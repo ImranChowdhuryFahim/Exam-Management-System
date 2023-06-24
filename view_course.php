@@ -54,33 +54,6 @@ if(isset($_GET['course_code']))
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    <?php 
-                                    include 'connect.php';
-                                    
-                                  $sql = "SELECT * FROM  courses";
-                                  $parse = oci_parse($conn,$sql);
-                                  oci_execute($parse);
-                                   while($row=oci_fetch_array($parse,OCI_ASSOC)) { 
-                                
-                                 
-                                      ?>
-                                            <tr>
-                                                <td><?php echo $row['COURSE_CODE']; ?></td>
-                                                <td><?php echo $row['COURSE_TITLE']; ?></td>
-                                                <td><?php echo $row['COURSE_NAME']; ?></td>
-                                                
-                                                <td>
-            <?php if(isset($user_type)){  if($user_type == "Admin"){ ?> 
-                                                <a href="edit_course.php?course_code=<?=$row['COURSE_CODE'];?>"><button type="button" class="btn btn-xs btn-primary" ><i class="fa fa-plus-square"></i></button></a>
-                                              <?php } } ?>
-
-            <?php if(isset($user_type)){  if($user_type == "Admin"){ ?> 
-                                                <a href="view_course.php?course_code=<?=$row['COURSE_CODE'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a>
-                                              <?php } } ?>
-                                               
-                                                </td>
-                                            </tr>
-                                          <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -130,4 +103,31 @@ if(isset($_GET['course_code']))
 
 Array.from(document.querySelectorAll('button[data-for]')).
 forEach(addButtonTrigger);
+    </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#myTable').DataTable({
+        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+          $(nRow).attr('id', aData[0]);
+        },
+        lengthMenu: 
+            [5,10]
+        ,
+        'serverSide': 'true',
+        'processing': 'true',
+        'paging': 'true',
+        'order': [],
+        'ajax': {
+          'url': 'fetch_courses_data.php',
+          'type': 'post',
+        },
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [3]
+          },
+
+        ]
+      });
+    });
     </script>

@@ -16,19 +16,6 @@
                         <li> <a href="index.php" aria-expanded="false"><i class="fa fa-window-maximize"></i>Dashboard</a>
                         </li>
 
-                        <?php if(!isset($user_type)){  if($user_type=='Admin'){ ?> 
-                         <!-- <li class="nav-label">Attendence</li> -->
-                        <li> <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-clock-o"></i><span class="hide-menu">Attendence Management</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                            <?php if(isset($user_type)){  if($user_type=='Admin'){ ?> 
-                                <li><a href="add_attendence.php">Add Attendence</a></li>
-                            <?php } } ?>
-                                <li><a href="view_attendence.php">View Attendence</a></li>
-                               
-                            </ul>
-                        </li>
-                    <?php } } ?>
-
                         <?php if(isset($user_type)){  if($user_type=='Admin'){ ?> 
                          <!-- <li class="nav-label">Teacher</li> -->
                         <li> <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-user"></i><span class="hide-menu">Teacher Management</span></a>
@@ -122,6 +109,10 @@
                    
                
 
+                    
+                        <li> <a class="has-arrow" href="logout.php" ><i class="fa fa-sign-out"></i>Logout</a>
+                            
+                        </li>
                     
                          
                    

@@ -10,19 +10,13 @@
     <meta name="author" content="">
      
     <title>Halltracker</title>
-
-    <!-- <link href="css/lib/chartist/chartist.min.css" rel="stylesheet"> -->
-  <!-- <link href="css/lib/owl.carousel.min.css" rel="stylesheet" />
-    <link href="css/lib/owl.theme.default.min.css" rel="stylesheet" /> -->
     
     <link href="css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
     
     <link href="css/helper.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
- <!-- <link rel="stylesheet" href="css/lib/html5-editor/bootstrap-wysihtml5.css" /> -->
- <!-- <link href="css/lib/calendar2/semantic.ui.min.css" rel="stylesheet">
-    <link href="css/lib/calendar2/pignose.calendar.min.css" rel="stylesheet"> -->
      <link href="css/lib/sweetalert/sweetalert.css" rel="stylesheet">
+     <link href="css/datatables-1.10.25.min.css" rel="stylesheet">
 </head>
 
 <body class="fix-header fix-sidebar">

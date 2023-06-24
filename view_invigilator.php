@@ -50,23 +50,7 @@ if(isset($_GET['room_no']) && isset($_GET['teacher_id']) && isset($_GET['exam_da
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    <?php 
-                                    include 'connect.php';
-                                  $sql1 = "SELECT INVIGILATES.TEACHER_ID,ROOM_NO,EXAM_DATE,TEACHER_NAME FROM  INVIGILATES join TEACHER on TEACHER.TEACHER_ID=INVIGILATES.TEACHER_ID";
-                                  $parse = oci_parse($conn,$sql1);
-                                  oci_execute($parse);
-                                   
-                                   while($row=oci_fetch_array($parse,OCI_ASSOC)) { 
-                                      ?>
-                                            <tr>
-                                                <td><?php echo $row['ROOM_NO']; ?></td>
-                                                <td><?php echo $row['TEACHER_NAME']; ?></td>
-                                                <td><?php echo $row['EXAM_DATE']; ?></td>
-                                                <td>
-                                                <a href="view_invigilator.php?room_no=<?=$row['ROOM_NO'];?>&teacher_id=<?=$row['TEACHER_ID'];?>&exam_date=<?=$row['EXAM_DATE'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a>
-                                                </td>
-                                            </tr>
-                                          <?php } ?>
+                                    
                                         </tbody>
                                     </table>
                                 </div>
@@ -117,4 +101,31 @@ if(isset($_GET['room_no']) && isset($_GET['teacher_id']) && isset($_GET['exam_da
 
 Array.from(document.querySelectorAll('button[data-for]')).
 forEach(addButtonTrigger);
+    </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#myTable').DataTable({
+        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+          $(nRow).attr('id', aData[0]);
+        },
+        lengthMenu: 
+            [5,10]
+        ,
+        'serverSide': 'true',
+        'processing': 'true',
+        'paging': 'true',
+        'order': [],
+        'ajax': {
+          'url': 'fetch_invigilator_data.php',
+          'type': 'post',
+        },
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [3]
+          },
+
+        ]
+      });
+    });
     </script>

@@ -30,15 +30,13 @@
                                     <span><i class="ti-bag f-s-40"></i></span>
                                 </div>
                                 <div class="media-body media-text-right">
-                                    <?php $sql="SELECT COUNT(*) FROM TEACHER";
+                                    <?php $sql="SELECT TOTALTEACHERS from dual";
                                 $parse = oci_parse($conn,$sql);
                                 oci_execute($parse);
                                 $row=oci_fetch_array($parse,OCI_ASSOC);
-                                // $s = json_encode($row);
-                                // echo $s;
                                 $count = oci_num_rows($parse);
                                 ?> 
-                                    <h2 class="color-white"><?php echo $row['COUNT(*)'];?></h2>
+                                    <h2 class="color-white"><?php echo $row['TOTALTEACHERS'];?></h2>
                                     <p class="m-b-0">Total Teachers</p>
                                 </div>
                             </div>
@@ -51,11 +49,11 @@
                                     <span><i class="ti-comment f-s-40"></i></span>
                                 </div>
                                 <div class="media-body media-text-right">
-                                <?php $sql="SELECT COUNT(*) FROM STUDENT";
+                                <?php $sql="SELECT TOTALSTUDENTS from dual";
                                 $parse = oci_parse($conn,$sql);
                                 oci_execute($parse);
                                 $row=oci_fetch_array($parse,OCI_ASSOC);?>
-                                <h2 class="color-white"><?php echo $row['COUNT(*)'];?></h2>
+                                <h2 class="color-white"><?php echo $row['TOTALSTUDENTS'];?></h2>
                                     <p class="m-b-0">Total Students</p>
                                 </div>
                             </div>
@@ -68,11 +66,11 @@
                                     <span><i class="ti-vector f-s-40"></i></span>
                                 </div>
                                 <div class="media-body media-text-right">
-                                    <?php $sql="SELECT COUNT(*) FROM COURSES";
+                                    <?php $sql="SELECT TOTALCOURSES from dual";
                                 $parse = oci_parse($conn,$sql);
                                 oci_execute($parse);
                                 $row=oci_fetch_array($parse,OCI_ASSOC);?>
-                                <h2 class="color-white"><?php echo $row['COUNT(*)'];?></h2>
+                                <h2 class="color-white"><?php echo $row['TOTALCOURSES'];?></h2>
                                     <p class="m-b-0">Total Courses</p>
                                 </div>
                             </div>
@@ -85,11 +83,11 @@
                                     <span><i class="ti-location-pin f-s-40"></i></span>
                                 </div>
                                 <div class="media-body media-text-right">
-                                     <?php $sql="SELECT COUNT(*) FROM ROOM";
+                                     <?php $sql="SELECT TOTALROOMS from dual";
                                 $parse = oci_parse($conn,$sql);
                                 oci_execute($parse);
                                 $row=oci_fetch_array($parse,OCI_ASSOC);?> 
-                                    <h2 class="color-white"><?php echo $row['COUNT(*)'];?></h2>
+                                    <h2 class="color-white"><?php echo $row['TOTALROOMS'];?></h2>
                                     <p class="m-b-0">Total Rooms</p>
                                 </div>
                             </div>
@@ -98,42 +96,5 @@
 
                 
             </div>
-             <!-- <div class="row page-titles">
-                <div class="col-md-5 align-self-center">
-                    <h3 class="text-primary">View Exam</h3> </div>
-                
-            </div>
-            <div class="card">
-                            <div class="card-body">
-                            
-                                <div class="table-responsive m-t-40">
-                                    <table id="myTable" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Exam Name</th>
-                                                <th>Action</th> 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                    <?php 
-                                 /*   include 'connect.php';
-                                  $sql1 = "SELECT * FROM  `exam`";
-                                   $result1 = $conn->query($sql1);
-                                   while($row = $result1->fetch_assoc()) { */
-                                      ?>
-                                            <tr>
-                                                <td><?php //echo $row['name']; ?></td>
-                                                <td>
-                                                <a href="view_exam.php?id=<?php=//$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a>
-                                                </td>
-                                            </tr>
-                                          <?php // } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    
-        </div> -->
             
             <?php include('footer.php');?>

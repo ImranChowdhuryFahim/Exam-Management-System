@@ -11,6 +11,7 @@
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Student ID: <?php echo $_SESSION['id'] ?></li>
                         <li class="breadcrumb-item active">Exam Registraion Management</li>
                     </ol>
                 </div>

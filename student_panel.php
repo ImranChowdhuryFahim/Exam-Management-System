@@ -29,6 +29,7 @@ if(isset($_GET['course_code']) && isset($_GET['exam_date']))
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Student ID: <?php echo $_SESSION['id'] ?></li>
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                 </div>
@@ -97,7 +98,7 @@ if(isset($_GET['course_code']) && isset($_GET['exam_date']))
 </div>
 <?php unset($_SESSION["success"]);  
 } ?>
-<?php if(!empty($_SESSION['error'])) {  echo "aschi";  ?>
+<?php if(!empty($_SESSION['error'])) {  ?>
  
 <div class="popup popup--icon -error js_error-popup popup--visible">
   <div class="popup__background"></div>

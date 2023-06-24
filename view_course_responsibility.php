@@ -3,7 +3,7 @@
 <?php include('header.php');?>
 <?php include('sidebar.php');
 
-if(isset($_GET['course_code']) && isset($_GET['teacher_id']))
+if(isset($_GET['course_code']) && isset($_GET['teacher_id'])&& isset($_GET['section']))
 { ?>
 <div class="popup popup--icon -question js_question-popup popup--visible">
   <div class="popup__background"></div>
@@ -13,7 +13,7 @@ if(isset($_GET['course_code']) && isset($_GET['teacher_id']))
     </h1>
     <p>Are You Sure To Delete This Record?</p>
     <p>
-      <a href="del_course_responsibility.php?course_code=<?php echo $_GET['course_code']; ?>&teacher_id=<?php echo $_GET['teacher_id']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
+      <a href="del_course_responsibility.php?course_code=<?php echo $_GET['course_code']; ?>&teacher_id=<?php echo $_GET['teacher_id']; ?>&section=<?php echo $_GET['section']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
       <a href="view_course_responsibility.php" class="button button--error" data-for="js_success-popup">No</a>
     </p>
   </div>
@@ -54,32 +54,7 @@ if(isset($_GET['course_code']) && isset($_GET['teacher_id']))
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    <?php 
-                                    include 'connect.php';
-                                    
-                                  $sql = "SELECT COURSE_CODE,TEACHER_NAME,TEACHER.TEACHER_ID,SECTION  FROM  courses_responsibility join teacher on teacher.teacher_id = courses_responsibility.teacher_id";
-                                  $parse = oci_parse($conn,$sql);
-                                  oci_execute($parse);
-                                   while($row=oci_fetch_array($parse,OCI_ASSOC)) { 
-                                
-                                 
-                                      ?>
-                                            <tr>
-                                                <td><?php echo $row['COURSE_CODE']; ?></td>
-                                                <td><?php echo $row['TEACHER_NAME']; ?></td>
-                                                <td><?php echo $row['SECTION']; ?></td>
-                                                
-                                                <td>
-
-            
-
-            <?php if(isset($user_type)){  if($user_type == "Admin"){ ?> 
-                                                <a href="view_course_responsibility.php?course_code=<?=$row['COURSE_CODE'];?>&teacher_id=<?=$row['TEACHER_ID'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a>
-                                              <?php } } ?>
-                                               
-                                                </td>
-                                            </tr>
-                                          <?php } ?>
+                                  
                                         </tbody>
                                     </table>
                                 </div>
@@ -130,4 +105,31 @@ if(isset($_GET['course_code']) && isset($_GET['teacher_id']))
 
 Array.from(document.querySelectorAll('button[data-for]')).
 forEach(addButtonTrigger);
+    </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#myTable').DataTable({
+        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+          $(nRow).attr('id', aData[0]);
+        },
+        lengthMenu: 
+            [5,10]
+        ,
+        'serverSide': 'true',
+        'processing': 'true',
+        'paging': 'true',
+        'order': [],
+        'ajax': {
+          'url': 'fetch_courses_responsibility_data.php',
+          'type': 'post',
+        },
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [3]
+          },
+
+        ]
+      });
+    });
     </script>

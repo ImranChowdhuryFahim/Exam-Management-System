@@ -51,29 +51,7 @@ if(isset($_GET['room_no']))
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    <?php 
-                                    include 'connect.php';
-                                    
-                                  $sql1 = "SELECT * FROM  room";
-                                  $parse = oci_parse($conn,$sql1);
-                                  oci_execute($parse);
-
-                                   while($row=oci_fetch_array($parse,OCI_ASSOC)) { 
-                                
-                                 
-                                      ?>
-                                            <tr>
-                                                <td><?php echo $row['ROOM_NO']; ?></td>
-                                                <td><?php echo $row['CAPACITY']; ?></td>
-                                                <td><?php echo $row['LOCATION']; ?></td>
-
-                                                <td> 
-                                                <a href="edit_room.php?room_no=<?=$row['ROOM_NO'];?>"><button type="button" class="btn btn-xs btn-primary" ><i class="fa fa-plus-square"></i></button></a> 
-                                                <a href="view_room.php?room_no=<?=$row['ROOM_NO'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a>
-                                               
-                                                </td>
-                                            </tr>
-                                          <?php } ?>
+ 
                                         </tbody>
                                     </table>
                                 </div>
@@ -123,4 +101,31 @@ if(isset($_GET['room_no']))
 
 Array.from(document.querySelectorAll('button[data-for]')).
 forEach(addButtonTrigger);
+    </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#myTable').DataTable({
+        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+          $(nRow).attr('id', aData[0]);
+        },
+        lengthMenu: 
+            [5,10]
+        ,
+        'serverSide': 'true',
+        'processing': 'true',
+        'paging': 'true',
+        'order': [],
+        'ajax': {
+          'url': 'fetch_room_data.php',
+          'type': 'post',
+        },
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [3]
+          },
+
+        ]
+      });
+    });
     </script>

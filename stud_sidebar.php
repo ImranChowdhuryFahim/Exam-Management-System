@@ -17,7 +17,10 @@
                         <li> <a href="add_exam_registration.php" aria-expanded="false"><i class="fa fa-graduation-cap"></i>Registraion for Exam</a>
                         </li>     
                         <li> <a href="view_marks_obtained.php" aria-expanded="false"><i class="fa fa-newspaper-o"></i>View Marks Obtained</a>
-                        </li>        
+                        </li> 
+                        <li> <a class="has-arrow" href="logout.php" ><i class="fa fa-sign-out"></i>Logout</a>
+                            
+                        </li>       
                          
                     </ul>   
                 </nav>

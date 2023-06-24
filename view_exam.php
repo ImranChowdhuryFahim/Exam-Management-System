@@ -51,25 +51,7 @@ if(isset($_GET['course_code']) && isset($_GET['exam_date']))
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    <?php 
-                                    include 'connect.php';
-                                  $sql1 = "SELECT to_char(start_time,'HH.MI AM') as start_time,to_char(end_time,'HH.MI AM') as end_time,course_code,exam_date FROM  EXAM_SCHEDULING";
-                                  $parse = oci_parse($conn,$sql1);
-                                  oci_execute($parse);
-                                   
-                                   while($row=oci_fetch_array($parse,OCI_ASSOC)) { 
-                          
-                                      ?>
-                                            <tr>
-                                                <td><?php echo $row['COURSE_CODE']; ?></td>
-                                                <td><?php echo $row['EXAM_DATE']; ?></td>
-                                                <td><?php echo $row['START_TIME']; ?></td>
-                                                <td><?php echo $row['END_TIME']; ?></td>
-                                                <td>
-                                                <a href="view_exam.php?course_code=<?=$row['COURSE_CODE'];?>&exam_date=<?=$row['EXAM_DATE'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a>
-                                                </td>
-                                            </tr>
-                                          <?php } ?>
+                                    
                                         </tbody>
                                     </table>
                                 </div>
@@ -120,4 +102,31 @@ if(isset($_GET['course_code']) && isset($_GET['exam_date']))
 
 Array.from(document.querySelectorAll('button[data-for]')).
 forEach(addButtonTrigger);
+    </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#myTable').DataTable({
+        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+          $(nRow).attr('id', aData[0]);
+        },
+        lengthMenu: 
+            [5,10]
+        ,
+        'serverSide': 'true',
+        'processing': 'true',
+        'paging': 'true',
+        'order': [],
+        'ajax': {
+          'url': 'fetch_exam_data.php',
+          'type': 'post',
+        },
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [4]
+          },
+
+        ]
+      });
+    });
     </script>

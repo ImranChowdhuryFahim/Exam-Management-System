@@ -4,6 +4,7 @@
 <?php include('teacher_sidebar.php');?>   
 
 
+
         <div class="page-wrapper">
             
             <div class="row page-titles">
@@ -12,6 +13,7 @@
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Teacher ID: <?php echo $_SESSION['id'] ?></li>
                         <li class="breadcrumb-item active">View Marks</li>
                     </ol>
                 </div>
@@ -33,41 +35,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    <?php 
-                                    include 'connect.php';
 
-                                  $sql = "SELECT course_code,section ";
-                                  $sql1 = "SELECT STUDENT_ID,COURSE_CODE,CASE when SECTION_A is null then -1 Else SECTION_A END as SECTION_A,
-                                  CASE when SECTION_B is null then -1 Else SECTION_B END as SECTION_B from MARKS_OBTAINED where COURSE_CODE in (select course_code from courses_responsibility where teacher_id='" . $_SESSION['id'] . "')";
-
-                                  $parse = oci_parse($conn,$sql1);
-                                  oci_execute($parse);
-                                   
-                                   while($row=oci_fetch_array($parse,OCI_ASSOC)) { 
-                                      $a = "SELECT count(section) as A from courses_responsibility where course_code='" . $row['COURSE_CODE'] . "' and section='A'";
-                                      $p1 = oci_parse($conn,$a);
-                                      oci_execute($p1);
-                                      $r1= oci_fetch_array($p1,OCI_ASSOC);
-                                      $b = "SELECT count(section) as B from courses_responsibility where course_code='" . $row['COURSE_CODE'] . "' and section='B'";
-                                      $p2 = oci_parse($conn,$b);
-                                      oci_execute($p2);
-                                      $r2= oci_fetch_array($p2,OCI_ASSOC);
-                                      ?>
-                                            <tr>
-                                                <td><?php echo $row['STUDENT_ID']; ?></td>
-                                                <td><?php echo $row['COURSE_CODE']; ?></td>
-                                                <td><?php echo $row['SECTION_A']!=-1?$row['SECTION_A']:'Not Assigned'; ?></td>
-                                                <td><?php echo $row['SECTION_B']!=-1?$row['SECTION_B']:'Not Assigned'; ?></td>
-                                                 <td>
-                                                 <?php if(isset($r1['A'])){  if($r1['A']==1){ ?> 
-                                                    <a href="assign_marks_a.php?student_id=<?=$row['STUDENT_ID'];?>&course_code=<?=$row['COURSE_CODE'];?>&section='A'"><button type="button" class="btn btn-xs btn-primary" >A</button></a>
-                                              <?php } } ?>   
-                                              <?php if(isset($r2['B'])){  if($r2['B']==1){ ?> 
-                                                    <a href="assign_marks_b.php?student_id=<?=$row['STUDENT_ID'];?>&course_code=<?=$row['COURSE_CODE'];?>&section='B'"><button type="button" class="btn btn-xs btn-primary" >B</button></a>
-                                              <?php } } ?> 
-                                                </td>
-                                            </tr>
-                                          <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -77,3 +45,73 @@
                 
 
 <?php include('footer.php');?>
+
+<link rel="stylesheet" href="popup_style.css">
+<?php if(!empty($_SESSION['success'])) {  ?>
+<div class="popup popup--icon -success js_success-popup popup--visible">
+  <div class="popup__background"></div>
+  <div class="popup__content">
+    <h3 class="popup__content__title">
+      Success 
+    </h1>
+    <p><?php echo $_SESSION['success']; ?></p>
+    <p>
+      <button class="button button--success" data-for="js_success-popup">Close</button>
+    </p>
+  </div>
+</div>
+<?php unset($_SESSION["success"]);  
+} ?>
+<?php if(!empty($_SESSION['error'])) {  ?>
+<div class="popup popup--icon -error js_error-popup popup--visible">
+  <div class="popup__background"></div>
+  <div class="popup__content">
+    <h3 class="popup__content__title">
+      Error 
+    </h1>
+    <p><?php echo $_SESSION['error']; ?></p>
+    <p>
+      <button class="button button--error" data-for="js_error-popup">Close</button>
+    </p>
+  </div>
+</div>
+<?php unset($_SESSION["error"]);  } ?>
+    <script>
+      var addButtonTrigger = function addButtonTrigger(el) {
+  el.addEventListener('click', function () {
+    var popupEl = document.querySelector('.' + el.dataset.for);
+    popupEl.classList.toggle('popup--visible');
+  });
+};
+
+Array.from(document.querySelectorAll('button[data-for]')).
+forEach(addButtonTrigger);
+    </script>
+
+    
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#myTable').DataTable({
+        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+          $(nRow).attr('id', aData[0]);
+        },
+        lengthMenu: 
+            [5,10]
+        ,
+        'serverSide': 'true',
+        'processing': 'true',
+        'paging': 'true',
+        'order': [],
+        'ajax': {
+          'url': 'fetch_students_marks_data.php',
+          'type': 'post',
+        },
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [4]
+          },
+
+        ]
+      });
+    });
+</script>

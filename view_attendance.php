@@ -12,6 +12,7 @@
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Teacher ID: <?php echo $_SESSION['id'] ?></li>
                         <li class="breadcrumb-item active">View Attendance</li>
                     </ol>
                 </div>
@@ -34,34 +35,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    <?php 
-                                    include 'connect.php';
-
-                                 
-                                  $sql1 = "SELECT STUDENT_ID,COURSE_CODE,CASE when ROOM_NO is null then 'Not Assigned' Else ROOM_NO END as room_no,
-                                  CASE when STATUS is null then 'Not Assigned' Else STATUS END as STATUS,EXAM_DATE from ATTENDANCE where ROOM_NO in (select room_no from invigilates where teacher_id='" . $_SESSION['id'] . "')";
-
-                                  $parse = oci_parse($conn,$sql1);
-                                  oci_execute($parse);
-                                   
-                                   while($row=oci_fetch_array($parse,OCI_ASSOC)) { 
-                                      ?>
-                                            <tr>
-                                                <td><?php echo $row['EXAM_DATE']; ?></td>
-                                                <td><?php echo $row['ROOM_NO']; ?></td>
-                                                <td><?php echo $row['STUDENT_ID']; ?></td>
-                                                <td><?php echo $row['COURSE_CODE']; ?></td>
-                                                <td><?php echo $row['STATUS']?></td>
-                                                 <td>
-                                                 
-                                                    <a href="./pages/present.php?student_id=<?=$row['STUDENT_ID'];?>&course_code=<?=$row['COURSE_CODE'];?>&room_no=<?=$row['ROOM_NO'];?>&exam_date=<?=$row['EXAM_DATE'];?>"><button type="button" class="btn btn-xs btn-primary" >Present</button></a>
-                                               
-                                               
-                                                    <a href="./pages/absent.php?student_id=<?=$row['STUDENT_ID'];?>&course_code=<?=$row['COURSE_CODE'];?>&room_no=<?=$row['ROOM_NO'];?>&exam_date=<?=$row['EXAM_DATE'];?>"><button type="button" class="btn btn-xs btn-danger" >Absent</button></a>
-                                              
-                                                </td>
-                                            </tr>
-                                          <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -113,3 +86,30 @@
 Array.from(document.querySelectorAll('button[data-for]')).
 forEach(addButtonTrigger);
     </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#myTable').DataTable({
+        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+          $(nRow).attr('id', aData[0]);
+        },
+        lengthMenu: 
+            [5,10]
+        ,
+        'serverSide': 'true',
+        'processing': 'true',
+        'paging': 'true',
+        'order': [],
+        'ajax': {
+          'url': 'fetch_attendance_data.php',
+          'type': 'post',
+        },
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [5]
+          },
+
+        ]
+      });
+    });
+</script>
