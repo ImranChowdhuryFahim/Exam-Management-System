@@ -108,7 +108,9 @@
                    
                    
                
-
+                    <li> <a class="has-arrow" href="view_questions.php" ><i class="fa fa-newspaper-o"></i>View Questions</a>
+                            
+                            </li>
                     
                         <li> <a class="has-arrow" href="logout.php" ><i class="fa fa-sign-out"></i>Logout</a>
                             

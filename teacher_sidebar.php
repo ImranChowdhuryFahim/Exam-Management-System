@@ -18,6 +18,7 @@
                         <li> <a href="view_students_marks_by_course_code.php" aria-expanded="false"><i class="fa fa-graduation-cap"></i>Students Marks</a>
                         <li> <a href="view_attendance_by_room_no.php" aria-expanded="false"><i class="fa fa-newspaper-o"></i>Attendance</a>
                         </li>    
+                        <li> <a href="view_questions_teacher.php" aria-expanded="false"><i class="fa fa-newspaper-o"></i>View Questions</a> </li>
                         <li> <a class="has-arrow" href="logout.php" ><i class="fa fa-sign-out"></i>Logout</a>
                             
                         </li>          
